@@ -1,0 +1,14 @@
+type: folder
+model: folder
+id: fl_WCvChRdjU8
+createdAt: 2025-11-07T04:09:59.851027600
+updatedAt: 2025-11-09T17:41:37.126731200
+workspaceId: wk_Fb63W8kZcR
+folderId: null
+authentication:
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJTRURFLTAxIiwianRpIjoiMDVlNDY2ODctMDczNi00ZGZmLTg2NDctYjliYzliMDRhZmQzIiwiZXhwIjoxNzYzMTQyMDc1LCJpc3MiOiJCZWxsYVZpc3RhSXNzdWVyIiwiYXVkIjoiQmVsbGFWaXN0YUF1ZGllbmNlIn0.lGw05f5OGxNo9M8GSJNEHhR-1q4Xa11nsOjFJvzMyP4
+authenticationType: bearer
+description: ''
+headers: []
+name: Api
+sortPriority: -1762488599831.0

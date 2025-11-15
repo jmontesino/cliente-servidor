@@ -1,0 +1,28 @@
+type: http_request
+model: http_request
+id: rq_n6kBnomPT3
+createdAt: 2025-11-05T19:08:48.240091200
+updatedAt: 2025-11-14T20:37:23.621955700
+workspaceId: wk_Fb63W8kZcR
+folderId: fl_WCvChRdjU8
+authentication: {}
+authenticationType: null
+body:
+  text: |-
+    {
+      "Id": "SEDE-03",
+      "Nombre": "Sede Sur",
+      "Password": "123456"
+    }
+bodyType: application/json
+description: ''
+headers:
+- enabled: true
+  name: Content-Type
+  value: application/json
+  id: hZ8R5B2c3H
+method: PUT
+name: Create Sede
+sortPriority: 0.0
+url: https://localhost:7205/sedes
+urlParameters: []

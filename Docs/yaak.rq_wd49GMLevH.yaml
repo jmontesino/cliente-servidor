@@ -1,0 +1,27 @@
+type: http_request
+model: http_request
+id: rq_wd49GMLevH
+createdAt: 2025-11-07T03:51:30.661897600
+updatedAt: 2025-11-09T17:41:13.888089100
+workspaceId: wk_Fb63W8kZcR
+folderId: fl_WCvChRdjU8
+authentication: {}
+authenticationType: null
+body:
+  text: |-
+    {
+      "Id": "SEDE-01",
+      "Password": "123456"
+    }
+bodyType: application/json
+description: ''
+headers:
+- enabled: true
+  name: Content-Type
+  value: application/json
+  id: hBcDvpIAm7
+method: POST
+name: Login
+sortPriority: 4000.0
+url: https://localhost:7205/login
+urlParameters: []

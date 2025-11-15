@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace servidor.Models;
+namespace BellaVista.Models;
 
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum TipoEvento

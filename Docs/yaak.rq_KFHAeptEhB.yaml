@@ -1,0 +1,18 @@
+type: http_request
+model: http_request
+id: rq_KFHAeptEhB
+createdAt: 2025-11-05T19:01:27.006503900
+updatedAt: 2025-11-09T17:41:22.359321
+workspaceId: wk_Fb63W8kZcR
+folderId: fl_WCvChRdjU8
+authentication: {}
+authenticationType: null
+body: {}
+bodyType: null
+description: ''
+headers: []
+method: GET
+name: Get Eventos
+sortPriority: 1000.0
+url: https://localhost:7205/eventos
+urlParameters: []

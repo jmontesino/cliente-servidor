@@ -1,0 +1,14 @@
+type: workspace
+model: workspace
+id: wk_Fb63W8kZcR
+createdAt: 2025-11-05T19:01:23.387228700
+updatedAt: 2025-11-05T19:01:23.387229200
+authentication: {}
+authenticationType: null
+description: ''
+headers: []
+name: BellaVista
+encryptionKeyChallenge: null
+settingValidateCertificates: true
+settingFollowRedirects: true
+settingRequestTimeout: 0

@@ -1,4 +1,4 @@
-namespace servidor.Models;
+namespace BellaVista.Models;
 
 public class Sede
 {

@@ -1,0 +1,18 @@
+type: http_request
+model: http_request
+id: rq_p2d7RpeuSh
+createdAt: 2025-11-05T19:32:46.668169300
+updatedAt: 2025-11-09T17:41:19.944434600
+workspaceId: wk_Fb63W8kZcR
+folderId: fl_WCvChRdjU8
+authentication: {}
+authenticationType: null
+body: {}
+bodyType: null
+description: ''
+headers: []
+method: GET
+name: Get Sede Eventos
+sortPriority: 2000.0
+url: https://localhost:7205/sedes/SEDE-03/eventos
+urlParameters: []

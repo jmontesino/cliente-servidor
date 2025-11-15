@@ -1,0 +1,31 @@
+type: http_request
+model: http_request
+id: rq_Zzyc2SjGA9
+createdAt: 2025-11-05T19:01:34.366307900
+updatedAt: 2025-11-09T17:41:17.759503500
+workspaceId: wk_Fb63W8kZcR
+folderId: fl_WCvChRdjU8
+authentication: {}
+authenticationType: null
+body:
+  text: |-
+    {
+      "Id": "${[ uuid.v7() ]}",
+      "SedeId": "SEDE-03",
+      "Nombre": "Ramiro González",
+      "Identificacion": "1234567890",
+      "Tipo": "Entrada",
+      "Fecha": "${[ timestamp.iso8601() ]}"
+    }
+bodyType: application/json
+description: ''
+headers:
+- enabled: true
+  name: Content-Type
+  value: application/json
+  id: hZ8R5B2c3H
+method: PUT
+name: Create Evento
+sortPriority: 3000.0
+url: https://localhost:7205/eventos
+urlParameters: []

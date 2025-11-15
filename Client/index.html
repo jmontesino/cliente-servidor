@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lista de Eventos</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body class="bg-gray-50 min-h-screen p-8">
+    <div class="max-w-6xl mx-auto bg-white p-8 rounded-xl shadow-2xl">
+        <header class="flex justify-between items-center mb-6 pb-4">
+            <h1 class="text-4xl font-extrabold text-gray-900">
+                Lista de Eventos
+            </h1>
+            <a href="create.html"
+                class="btn btn-soft btn-primary">
+                Crear Nuevo Evento </a>
+        </header>
+        <div class="divider"></div>
+        <div class="flex items-center justify-between bg-indigo-50 border border-indigo-200 p-4 rounded-lg mb-6">
+            <div class="text-indigo-800 font-medium">
+                Hay
+                <div id="eventos-count" class="badge badge-primary">0</div>
+                eventos en total,
+                <div id="desincronizados-count" class="badge badge-secondary">0</div>
+                evento(s) por sincronizar.
+            </div>
+
+            <button type="button" id="sincronizar-btn" class="btn btn-soft btn-secondary">
+                Sincronizar Datos
+            </button>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table id="eventosTable" class="table table-zebra">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Id
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Identificación
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Nombre
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Tipo
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Fecha
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Estado
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="eventosBody" class="bg-white divide-y divide-gray-200">
+                    <tr>
+                        <td colspan="6" class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500 italic">
+                            Cargando eventos o lista vacía...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script type="module" src="./src/main.js"></script>
+</body>
+
+</html>

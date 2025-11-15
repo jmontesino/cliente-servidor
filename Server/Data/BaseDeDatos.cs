@@ -1,7 +1,7 @@
+using BellaVista.Models;
 using Microsoft.EntityFrameworkCore;
-using servidor.Models;
 
-namespace servidor.Data;
+namespace BellaVista.Data;
 
 public class BaseDeDatos : DbContext
 {
@@ -12,11 +12,12 @@ public class BaseDeDatos : DbContext
     {
         optionsBuilder.UseSqlite("Data Source=servidor.db");
     }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Sede>()
-            .HasMany(X => X.Eventos)
-            .WithOne(X => X.Sede!)
-            .HasForeignKey(X => X.SedeId);
+            .HasMany(x => x.Eventos)
+            .WithOne(x => x.Sede!)
+            .HasForeignKey(x => x.SedeId);
     }
 }
