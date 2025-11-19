@@ -1,18 +1,11 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Cryptography;
 
 namespace BellaVista;
 
 public class LoginService(string issuer, string audience, SecurityKey securityKey)
 {
-    private const int saltSize = 16;
-    private const int keySize = 64;
-    private const int iterations = 350000;
-    private readonly HashAlgorithmName hashAlgorithm = HashAlgorithmName.SHA512;
-    private const char segmentDelimiter = ':';
-
     public string GenerateToken(string id)
     {
         var claims = new[]
@@ -37,19 +30,60 @@ public class LoginService(string issuer, string audience, SecurityKey securityKe
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
-    public string Hash(string input)
+    // --- Método para Hashing (Registro/Creación de Usuario) ---
+    /// <summary>
+    /// Hashea la contraseña para su almacenamiento seguro en la base de datos.
+    /// </summary>
+    /// <param name="password">La contraseña en texto plano.</param>
+    /// <returns>La contraseña hasheada (que ya incluye el salt).</returns>
+    public string Hash(string password)
     {
-        byte[] salt = RandomNumberGenerator.GetBytes(saltSize);
-        byte[] hash = Rfc2898DeriveBytes.Pbkdf2(input, salt, iterations, hashAlgorithm, keySize);
-        return string.Join(segmentDelimiter, Convert.ToHexString(hash), Convert.ToHexString(salt));
+        // BCrypt.HashPassword genera automáticamente un salt único 
+        // y lo incluye en el resultado hasheado.
+        try
+        {
+            return BCrypt.Net.BCrypt.HashPassword(password);
+        }
+        catch (Exception ex)
+        {
+            // Manejo de errores
+            Console.WriteLine($"Error al hashear la contraseña: {ex.Message}");
+            throw;
+        }
     }
 
-    public bool Verify(string input, string hashString)
+    // --- Método para Verificación (Inicio de Sesión) ---
+    /// <summary>
+    /// Verifica si la contraseña de texto plano coincide con el hash almacenado.
+    /// </summary>
+    /// <param name="providedPassword">La contraseña ingresada por el usuario.</param>
+    /// <param name="hashedPassword">El hash recuperado de la base de datos.</param>
+    /// <returns>True si las contraseñas coinciden, de lo contrario, False.</returns>
+    public bool Verify(string providedPassword, string hashedPassword)
     {
-        string[] segments = hashString.Split(segmentDelimiter);
-        byte[] hash = Convert.FromHexString(segments[0]);
-        byte[] salt = Convert.FromHexString(segments[1]);
-        byte[] inputHash = Rfc2898DeriveBytes.Pbkdf2(input, salt, iterations, hashAlgorithm, hash.Length);
-        return CryptographicOperations.FixedTimeEquals(inputHash, hash);
+        if (string.IsNullOrEmpty(providedPassword) || string.IsNullOrEmpty(hashedPassword))
+        {
+            return false;
+        }
+
+        try
+        {
+            // BCrypt.Verify toma la contraseña de texto plano y el hash, 
+            // extrae el salt del hash, y luego hashea la contraseña de nuevo 
+            // con ese salt para compararlos de forma segura.
+            return BCrypt.Net.BCrypt.Verify(providedPassword, hashedPassword);
+        }
+        catch (BCrypt.Net.SaltParseException)
+        {
+            // Esto puede ocurrir si el hash almacenado es inválido o no tiene el formato correcto.
+            Console.WriteLine("Error: El hash almacenado no es válido.");
+            return false;
+        }
+        catch (Exception ex)
+        {
+            // Manejo general de errores
+            Console.WriteLine($"Error durante la verificación: {ex.Message}");
+            return false;
+        }
     }
 }

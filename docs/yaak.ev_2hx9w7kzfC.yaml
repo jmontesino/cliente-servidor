@@ -1,0 +1,18 @@
+type: environment
+model: environment
+id: ev_2hx9w7kzfC
+workspaceId: wk_Fb63W8kZcR
+createdAt: 2025-11-19T23:15:44.514963300
+updatedAt: 2025-11-19T23:16:07.378264400
+name: Local
+public: true
+base: false
+parentModel: environment
+parentId: null
+variables:
+- enabled: true
+  name: API_URL
+  value: https://localhost:7205
+  id: 2CNqs00hgT
+color: var(--success)
+sortPriority: 0.0

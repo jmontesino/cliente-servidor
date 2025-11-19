@@ -1,11 +1,11 @@
+using BellaVista;
 using BellaVista.Data;
 using BellaVista.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
-using BellaVista;
 
 const string ISSUER = "BellaVistaIssuer";
 const string AUDIENCE = "BellaVistaAudience";
@@ -46,6 +46,7 @@ using (var scope = app.Services.CreateScope())
 {
     var baseDeDatos = scope.ServiceProvider.GetRequiredService<BaseDeDatos>();
     baseDeDatos.Database.EnsureCreated();
+    baseDeDatos.SeedData();
 }
 
 app.UseHttpsRedirection();
@@ -56,11 +57,10 @@ app.UseCors("all");
 
 app.MapPost("/login", async ([FromServices] BaseDeDatos baseDeDatos, [FromServices] LoginService loginService, [FromBody] Sede sede) =>
 {
-    var hashedPassword = loginService.Hash(sede.Password);
     var sedeEncontrada = await baseDeDatos.Sedes.FirstOrDefaultAsync(x => x.Id == sede.Id);
     if (sedeEncontrada is null || !loginService.Verify(sede.Password, sedeEncontrada.Password))
     {
-        return Results.Unauthorized();
+        return Results.BadRequest("El usuario o la contraseña son incorrectos.");
     }
     var token = loginService.GenerateToken(sedeEncontrada.Id);
     return Results.Ok(new { token });

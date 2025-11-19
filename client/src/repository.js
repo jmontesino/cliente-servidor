@@ -41,7 +41,7 @@ class Repository {
     async getAllEventosAsync() {
         try {
             const response = await this.httpService.getAsync(
-                `/eventos/${localStorage.getItem(SEDE_KEY)}`,
+                `/sedes/${localStorage.getItem(SEDE_KEY)}/eventos`,
             );
             for (const evento of response) {
                 evento.estado = TIPO_EVENTO.Sincronizado;

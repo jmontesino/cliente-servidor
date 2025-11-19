@@ -2,7 +2,7 @@ type: http_request
 model: http_request
 id: rq_KFHAeptEhB
 createdAt: 2025-11-05T19:01:27.006503900
-updatedAt: 2025-11-09T17:41:22.359321
+updatedAt: 2025-11-19T20:16:50.050618300
 workspaceId: wk_Fb63W8kZcR
 folderId: fl_WCvChRdjU8
 authentication: {}
@@ -14,5 +14,5 @@ headers: []
 method: GET
 name: Get Eventos
 sortPriority: 1000.0
-url: https://localhost:7205/eventos
+url: https://cliente-servidor-production.up.railway.app/eventos
 urlParameters: []
