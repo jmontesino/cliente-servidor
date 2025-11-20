@@ -37,7 +37,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-builder.Services.AddAuthorization();
+builder.Services
+    .AddAuthorizationBuilder()
+    .AddPolicy("MainSedeOnly", policy => policy.RequireClaim("main", "True"));
+
 builder.Services.AddSingleton(new LoginService(ISSUER, AUDIENCE, key));
 
 var app = builder.Build();
@@ -62,8 +65,8 @@ app.MapPost("/login", async ([FromServices] BaseDeDatos baseDeDatos, [FromServic
     {
         return Results.BadRequest("El usuario o la contraseña son incorrectos.");
     }
-    var token = loginService.GenerateToken(sedeEncontrada.Id);
-    return Results.Ok(new { token });
+    var token = loginService.GenerateToken(sedeEncontrada);
+    return Results.Ok(new { token, sedeEncontrada.IsMain });
 }).AllowAnonymous();
 
 app.MapPut("/sedes", async ([FromServices] BaseDeDatos baseDeDatos, [FromServices] LoginService loginService, [FromBody] Sede sede) =>
@@ -76,7 +79,7 @@ app.MapPut("/sedes", async ([FromServices] BaseDeDatos baseDeDatos, [FromService
     }
 
     return Results.Ok();
-}).RequireAuthorization();
+}).RequireAuthorization("MainSedeOnly");
 
 app.MapPut("/eventos", async ([FromServices] BaseDeDatos baseDeDatos, [FromBody] Evento evento) =>
 {
@@ -104,5 +107,9 @@ app.MapGet("/sedes/{sede}/eventos", async ([FromServices] BaseDeDatos baseDeDato
     return await baseDeDatos.Eventos.Where(x => x.SedeId == sede).ToListAsync();
 }).RequireAuthorization();
 
+app.MapGet("/sedes", async ([FromServices] BaseDeDatos baseDeDatos) =>
+{
+    return await baseDeDatos.Sedes.Select(x => new { x.Id, x.IsMain }).ToListAsync();
+}).RequireAuthorization("MainSedeOnly");
 
 await app.RunAsync();

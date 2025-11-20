@@ -28,7 +28,12 @@ public class BaseDeDatos(LoginService loginService) : DbContext
             return;
         }
 
-        Sedes.Add(new Sede { Id = "SEDE-MAIN", Password = loginService.Hash("123456") });
+        Sedes.Add(new Sede
+        {
+            Id = "SEDE-MAIN",
+            Password = loginService.Hash("123456"),
+            IsMain = true
+        });
         SaveChanges();
     }
 }
