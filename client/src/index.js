@@ -16,14 +16,16 @@ async function loadEventosAsync() {
         eventosCount.innerText = eventos.length;
         const tbody = document.getElementById("eventosBody");
         tbody.innerHTML = "";
-        const desincronizados = eventos.filter(
-            (e) => e.estado !== TIPO_EVENTO.Sincronizado,
-        );
+        const desincronizados = eventos.filter((e) => e.estado !== TIPO_EVENTO.Sincronizado);
         desincronizadosCount.innerText = desincronizados.length;
+        if (desincronizados.length == 0) {
+            refreshButton.disabled = true;
+        } else {
+            refreshButton.disabled = false;
+        }
 
         eventos.forEach((evento) => {
-            const color =
-                evento.estado === TIPO_EVENTO.Sincronizado ? "green" : "red";
+            const color = evento.estado === TIPO_EVENTO.Sincronizado ? "green" : "red";
             const row = tbody.insertRow();
             row.className =
                 evento.estado === TIPO_EVENTO.Sincronizado
@@ -34,7 +36,7 @@ async function loadEventosAsync() {
             <td>${evento.identificacion}</td>
             <td>${evento.nombre}</td>
             <td>${evento.tipo}</td>
-            <td>${evento.fecha}</td>
+            <td>${new Date(evento.fecha).toLocaleString()}</td>
             <td>${evento.estado}</td>
           `;
         });

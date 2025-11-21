@@ -26,9 +26,7 @@ class Repository {
 
     async refreshEventosAsync() {
         const eventos = await this.#getAllEventosDBAsync();
-        const desincronizados = eventos.filter(
-            (e) => e.estado !== TIPO_EVENTO.Sincronizado,
-        );
+        const desincronizados = eventos.filter((e) => e.estado !== TIPO_EVENTO.Sincronizado);
         for (const evento of desincronizados) {
             try {
                 await this.httpService.putAsync("/eventos", evento);
@@ -40,9 +38,7 @@ class Repository {
 
     async getAllEventosAsync() {
         try {
-            const response = await this.httpService.getAsync(
-                `/sedes/${localStorage.getItem(SEDE_KEY)}/eventos`,
-            );
+            const response = await this.httpService.getAsync(`/sedes/${localStorage.getItem(SEDE_KEY)}/eventos`);
             for (const evento of response) {
                 evento.estado = TIPO_EVENTO.Sincronizado;
                 await this.#putDBAsync(evento);
@@ -97,8 +93,10 @@ class Repository {
         const tx = db.transaction([STORE_NAME], "readonly");
         const store = tx.objectStore(STORE_NAME);
         return new Promise((resolve, reject) => {
+            // Only for one sede
             const request = store.getAll();
-            request.onsuccess = () => resolve(request.result);
+            request.onsuccess = () =>
+                resolve(request.result.filter((evento) => evento.sedeId === localStorage.getItem(SEDE_KEY)));
             request.onerror = () => reject(request.error);
         });
     }

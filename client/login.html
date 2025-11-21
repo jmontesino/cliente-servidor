@@ -110,8 +110,10 @@
         </div>
 
         <script>
-            const API_URL = "https://cliente-servidor-production.up.railway.app";
+            const API_URL =
+                "https://cliente-servidor-production.up.railway.app";
             const TOKEN_KEY = "access-token";
+            const MAIN_KEY = "is-main";
             const SEDE_KEY = "sede";
             const HOME_PAGE = "index.html";
 
@@ -145,6 +147,7 @@
 
                     const data = await response.json();
                     localStorage.setItem(TOKEN_KEY, data.token);
+                    localStorage.setItem(MAIN_KEY, data.isMain);
                     localStorage.setItem(SEDE_KEY, id);
 
                     successMessage.classList.remove("hidden");

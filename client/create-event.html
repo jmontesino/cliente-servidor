@@ -4,11 +4,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Crear Nuevo Evento</title>
-        <link
-            href="https://cdn.jsdelivr.net/npm/daisyui@5"
-            rel="stylesheet"
-            type="text/css"
-        />
+        <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
         <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     </head>
 
@@ -35,17 +31,11 @@
                 Volver a Lista
             </a>
 
-            <h1 class="text-3xl font-bold text-gray-900 mb-6 border-b pb-3">
-                Crear Nuevo Evento
-            </h1>
+            <h1 class="text-3xl font-bold text-gray-900 mb-6 border-b pb-3">Crear Nuevo Evento</h1>
 
             <form id="eventoForm" class="space-y-6">
                 <div>
-                    <label
-                        for="id"
-                        class="block text-sm font-medium text-gray-700"
-                        >Id:</label
-                    >
+                    <label for="id" class="block text-sm font-medium text-gray-700">Id:</label>
                     <input
                         type="text"
                         id="id"
@@ -57,11 +47,7 @@
                 </div>
 
                 <div>
-                    <label
-                        for="sedeId"
-                        class="block text-sm font-medium text-gray-700"
-                        >Sede:</label
-                    >
+                    <label for="sedeId" class="block text-sm font-medium text-gray-700">Sede:</label>
                     <input
                         type="text"
                         id="sedeId"
@@ -73,11 +59,7 @@
                 </div>
 
                 <div>
-                    <label
-                        for="identificacion"
-                        class="block text-sm font-medium text-gray-700"
-                        >Identificación:</label
-                    >
+                    <label for="identificacion" class="block text-sm font-medium text-gray-700">Identificación:</label>
                     <input
                         type="text"
                         id="identificacion"
@@ -87,11 +69,7 @@
                 </div>
 
                 <div>
-                    <label
-                        for="nombre"
-                        class="block text-sm font-medium text-gray-700"
-                        >Nombre:</label
-                    >
+                    <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre:</label>
                     <input
                         type="text"
                         id="nombre"
@@ -101,11 +79,7 @@
                 </div>
 
                 <div>
-                    <label
-                        for="fecha"
-                        class="block text-sm font-medium text-gray-700"
-                        >Fecha:</label
-                    >
+                    <label for="fecha" class="block text-sm font-medium text-gray-700">Fecha:</label>
                     <input
                         type="datetime-local"
                         id="fecha"
@@ -114,11 +88,7 @@
                     />
                 </div>
                 <div>
-                    <label
-                        for="tipo"
-                        class="block text-sm font-medium text-gray-700"
-                        >Tipo:</label
-                    >
+                    <label for="tipo" class="block text-sm font-medium text-gray-700">Tipo:</label>
                     <select
                         name="tipo"
                         id="tipo"
@@ -145,37 +115,31 @@
             import repository from "./src/repository.js";
 
             document.getElementById("id").value = generateId();
-            document.getElementById("sedeId").value =
-                localStorage.getItem(SEDE_KEY);
+            document.getElementById("sedeId").value = localStorage.getItem(SEDE_KEY);
 
-            document
-                .getElementById("eventoForm")
-                .addEventListener("submit", async (e) => {
-                    e.preventDefault();
+            document.getElementById("eventoForm").addEventListener("submit", async (e) => {
+                e.preventDefault();
 
-                    const evento = {
-                        id: document.getElementById("id").value,
-                        identificacion:
-                            document.getElementById("identificacion").value,
-                        nombre: document.getElementById("nombre").value,
-                        fecha: document.getElementById("fecha").value,
-                        tipo: document.getElementById("tipo").value,
-                        estado: "Desincronizado",
-                        sedeId: localStorage.getItem(SEDE_KEY),
-                    };
+                const evento = {
+                    id: document.getElementById("id").value,
+                    identificacion: document.getElementById("identificacion").value,
+                    nombre: document.getElementById("nombre").value,
+                    fecha: new Date(document.getElementById("fecha").value),
+                    tipo: document.getElementById("tipo").value,
+                    estado: "Desincronizado",
+                    sedeId: localStorage.getItem(SEDE_KEY),
+                };
 
-                    try {
-                        await repository.addEventoAsync(evento);
-                        window.location.href = "index.html";
-                    } catch (error) {
-                        console.error("Error creando evento:", error);
-                    }
-                });
+                try {
+                    await repository.addEventoAsync(evento);
+                    window.location.href = "index.html";
+                } catch (error) {
+                    console.error("Error creando evento:", error);
+                }
+            });
 
             function generateId() {
-                return (
-                    "EVT-" + new Date().toISOString().replace(/[-:.TZ]/g, "")
-                );
+                return "EVT-" + new Date().toISOString().replace(/[-:.TZ]/g, "");
             }
         </script>
     </body>

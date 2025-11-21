@@ -3,36 +3,36 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Lista de Eventos</title>
+        <title>Lista de Sedes</title>
         <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
         <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     </head>
 
     <body class="bg-gray-50 min-h-screen p-8">
         <div class="flex items-center justify-between mb-6 pb-4">
-            <a href="sedes.html" class="btn btn-outline btn-primary"> Sedes </a>
-            <a href="logout.html" class="btn btn-outline btn-error"> ❌ </a>
+            <a href="index" class="btn btn-outline btn-primary"> Inicio </a>
+            <a href="logout" class="btn btn-outline btn-error"> ❌ </a>
         </div>
         <div class="max-w-6xl mx-auto bg-white p-8 rounded-xl shadow-2xl">
             <header class="flex justify-between items-center mb-6 pb-4">
-                <h1 class="text-4xl font-extrabold text-gray-900">Lista de Eventos</h1>
-                <a href="create-event.html" class="btn btn-soft btn-primary"> Crear Nuevo Evento </a>
+                <h1 class="text-4xl font-extrabold text-gray-900">Lista de Sedes</h1>
+                <a href="create-event" class="btn btn-soft btn-primary"> Crear Nueva Sede</a>
             </header>
             <div class="divider"></div>
             <div class="flex items-center justify-between bg-indigo-50 border border-indigo-200 p-4 rounded-lg mb-6">
                 <div class="text-indigo-800 font-medium">
                     Hay
-                    <div id="eventos-count" class="badge badge-primary">0</div>
-                    eventos en total,
+                    <div id="Sedes-count" class="badge badge-primary">0</div>
+                    Sedes en total,
                     <div id="desincronizados-count" class="badge badge-secondary">0</div>
-                    evento(s) por sincronizar.
+                    Sede(s) por sincronizar.
                 </div>
 
-                <button type="button" id="sincronizar-btn" class="btn btn-soft btn-success">Sincronizar Eventos</button>
+                <button type="button" id="sincronizar-btn" class="btn btn-soft btn-success">Sincronizar Sedes</button>
             </div>
 
             <div class="overflow-x-auto">
-                <table id="eventosTable" class="table table-zebra">
+                <table id="SedesTable" class="table table-zebra">
                     <thead class="bg-gray-100">
                         <tr>
                             <th
@@ -73,13 +73,13 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody id="eventosBody" class="bg-white divide-y divide-gray-200">
+                    <tbody id="SedesBody" class="bg-white divide-y divide-gray-200">
                         <tr>
                             <td
                                 colspan="6"
                                 class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500 italic"
                             >
-                                Cargando eventos o lista vacía...
+                                Cargando sedes o lista vacía...
                             </td>
                         </tr>
                     </tbody>
