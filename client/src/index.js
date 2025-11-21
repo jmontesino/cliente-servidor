@@ -4,6 +4,16 @@ import TIPO_EVENTO from "./event_type.js";
 const refreshButton = document.getElementById("sincronizar-btn");
 const eventosCount = document.getElementById("eventos-count");
 const desincronizadosCount = document.getElementById("desincronizados-count");
+const sedesLink = document.getElementById("sedes-link");
+const sedeName = document.getElementById("sede-name");
+const MAIN_KEY = "is-main";
+const SEDE_KEY = "sede";
+
+sedeName.innerText = "Sede: " + localStorage.getItem(SEDE_KEY);
+
+if (localStorage.getItem(MAIN_KEY) !== "true") {
+    sedesLink.style.display = "none";
+}
 
 refreshButton.addEventListener("click", async () => {
     await repository.refreshEventosAsync();

@@ -7,6 +7,11 @@ namespace BellaVista;
 
 public class LoginService(string issuer, string audience, SecurityKey securityKey)
 {
+    /// <summary>
+    /// Genera un token JWT para la autenticación de usuarios.
+    /// </summary>
+    /// <param name="sede">La sede para la cual se genera el token.</param>
+    /// <returns>El token JWT generado.</returns>
     public string GenerateToken(Sede sede)
     {
         var claims = new[]
@@ -39,7 +44,7 @@ public class LoginService(string issuer, string audience, SecurityKey securityKe
     /// <returns>La contraseña hasheada (que ya incluye el salt).</returns>
     public string Hash(string password)
     {
-        // BCrypt.HashPassword genera automáticamente un salt único 
+        // BCrypt.HashPassword genera automáticamente un salt único
         // y lo incluye en el resultado hasheado.
         try
         {
@@ -69,8 +74,8 @@ public class LoginService(string issuer, string audience, SecurityKey securityKe
 
         try
         {
-            // BCrypt.Verify toma la contraseña de texto plano y el hash, 
-            // extrae el salt del hash, y luego hashea la contraseña de nuevo 
+            // BCrypt.Verify toma la contraseña de texto plano y el hash,
+            // extrae el salt del hash, y luego hashea la contraseña de nuevo
             // con ese salt para compararlos de forma segura.
             return BCrypt.Net.BCrypt.Verify(providedPassword, hashedPassword);
         }

@@ -1,9 +1,10 @@
 import TIPO_EVENTO from "./event_type.js";
 import HTTP_SERVICE from "./http_service.js";
 
-const DB_NAME = "Visitantes";
+const DB_NAME = "Bellavista";
 const DB_VERSION = 1;
-const STORE_NAME = "eventos";
+const EVENTOS_STORE_NAME = "eventos";
+const SEDES_STORE_NAME = "sedes";
 const SEDE_KEY = "sede";
 
 class Repository {
@@ -13,12 +14,23 @@ class Repository {
         this.httpService = httpService;
     }
 
+    async addSedeAsync(sede) {
+        await this.#putSedeDBAsync(sede);
+        try {
+            await this.httpService.putAsync(`/sedes`, sede);
+            sede.estado = TIPO_EVENTO.Sincronizado;
+            await this.#putSedeDBAsync(sede);
+        } catch (error) {
+            console.error("Error al conectar con la API:", error);
+        }
+    }
+
     async addEventoAsync(evento) {
-        await this.#putDBAsync(evento);
+        await this.#putEventoDBAsync(evento);
         try {
             await this.httpService.putAsync(`/eventos`, evento);
             evento.estado = TIPO_EVENTO.Sincronizado;
-            await this.#putDBAsync(evento);
+            await this.#putEventoDBAsync(evento);
         } catch (error) {
             console.error("Error al conectar con la API:", error);
         }
@@ -36,12 +48,27 @@ class Repository {
         }
     }
 
+    async getAllSedesAsync() {
+        try {
+            const response = await this.httpService.getAsync(`/sedes`);
+            for (const sede of response) {
+                sede.estado = TIPO_EVENTO.Sincronizado;
+                await this.#putSedeDBAsync(sede);
+            }
+        } catch (error) {
+            console.error("Error al procesar sedes de la API:", error);
+        }
+
+        var sedes = this.#getAllSedesDBAsync();
+        return sedes;
+    }
+
     async getAllEventosAsync() {
         try {
             const response = await this.httpService.getAsync(`/sedes/${localStorage.getItem(SEDE_KEY)}/eventos`);
             for (const evento of response) {
                 evento.estado = TIPO_EVENTO.Sincronizado;
-                await this.#putDBAsync(evento);
+                await this.#putEventoDBAsync(evento);
             }
         } catch (error) {
             console.error("Error al procesar eventos de la API:", error);
@@ -67,8 +94,14 @@ class Repository {
 
             request.onupgradeneeded = (event) => {
                 const newDB = event.target.result;
-                if (!newDB.objectStoreNames.contains(STORE_NAME)) {
-                    newDB.createObjectStore(STORE_NAME, {
+                if (!newDB.objectStoreNames.contains(EVENTOS_STORE_NAME)) {
+                    newDB.createObjectStore(EVENTOS_STORE_NAME, {
+                        keyPath: "id",
+                        autoIncrement: true,
+                    });
+                }
+                if (!newDB.objectStoreNames.contains(SEDES_STORE_NAME)) {
+                    newDB.createObjectStore(SEDES_STORE_NAME, {
                         keyPath: "id",
                         autoIncrement: true,
                     });
@@ -77,10 +110,21 @@ class Repository {
         });
     }
 
-    async #putDBAsync(evento) {
+    async #putSedeDBAsync(sede) {
         const db = await this.#openConnectionAsync();
-        const tx = db.transaction([STORE_NAME], "readwrite");
-        const store = tx.objectStore(STORE_NAME);
+        const tx = db.transaction([SEDES_STORE_NAME], "readwrite");
+        const store = tx.objectStore(SEDES_STORE_NAME);
+        return new Promise((resolve, reject) => {
+            const request = store.put(sede);
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+        });
+    }
+
+    async #putEventoDBAsync(evento) {
+        const db = await this.#openConnectionAsync();
+        const tx = db.transaction([EVENTOS_STORE_NAME], "readwrite");
+        const store = tx.objectStore(EVENTOS_STORE_NAME);
         return new Promise((resolve, reject) => {
             const request = store.put(evento);
             request.onsuccess = () => resolve(request.result);
@@ -88,12 +132,22 @@ class Repository {
         });
     }
 
+    async #getAllSedesDBAsync() {
+        const db = await this.#openConnectionAsync();
+        const tx = db.transaction([SEDES_STORE_NAME], "readonly");
+        const store = tx.objectStore(SEDES_STORE_NAME);
+        return new Promise((resolve, reject) => {
+            const request = store.getAll();
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+        });
+    }
+
     async #getAllEventosDBAsync() {
         const db = await this.#openConnectionAsync();
-        const tx = db.transaction([STORE_NAME], "readonly");
-        const store = tx.objectStore(STORE_NAME);
+        const tx = db.transaction([EVENTOS_STORE_NAME], "readonly");
+        const store = tx.objectStore(EVENTOS_STORE_NAME);
         return new Promise((resolve, reject) => {
-            // Only for one sede
             const request = store.getAll();
             request.onsuccess = () =>
                 resolve(request.result.filter((evento) => evento.sedeId === localStorage.getItem(SEDE_KEY)));

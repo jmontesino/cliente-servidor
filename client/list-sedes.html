@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Lista de Sedes</title>
+        <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    </head>
+
+    <body class="bg-gray-50 min-h-screen p-8">
+        <div class="navbar bg-base-100 shadow-sm">
+            <div class="navbar-start">
+                <a class="btn btn-ghost text-xl" href="index.html">Bellavista</a>
+            </div>
+            <div class="navbar-end">
+                <div class="divider divider-horizontal"></div>
+                <a href="logout.html" class="btn btn-outline btn-error"> Cerrar Sesión </a>
+            </div>
+        </div>
+        <div class="max-w-6xl mx-auto bg-white p-8 rounded-xl shadow-2xl">
+            <header class="flex justify-between items-center mb-6 pb-4">
+                <h1 class="text-4xl font-extrabold text-gray-900">Lista de Sedes</h1>
+                <a href="create-sede" class="btn btn-soft btn-primary"> Crear Nueva Sede</a>
+            </header>
+            <div class="divider"></div>
+            <div class="flex items-center justify-between bg-indigo-50 border border-indigo-200 p-4 rounded-lg mb-6">
+                <div class="text-indigo-800 font-medium">
+                    Hay
+                    <div id="sedes-count" class="badge badge-primary">0</div>
+                    Sedes en total,
+                    <div id="desincronizados-count" class="badge badge-secondary">0</div>
+                    Sede(s) por sincronizar.
+                </div>
+
+                <button type="button" id="sincronizar-btn" class="btn btn-soft btn-success">Sincronizar Sedes</button>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table id="SedesTable" class="table table-zebra">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th
+                                scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            >
+                                Id
+                            </th>
+                            <th
+                                scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            >
+                                Principal
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="sedes-body" class="bg-white divide-y divide-gray-200">
+                        <tr>
+                            <td
+                                colspan="6"
+                                class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500 italic"
+                            >
+                                Cargando sedes o lista vacía...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <script type="module">
+            import repository from "./src/repository.js";
+            import TIPO_EVENTO from "./src/event_type.js";
+
+            const sedesCount = document.getElementById("sedes-count");
+            const desincronizadosCount = document.getElementById("desincronizados-count");
+            const refreshButton = document.getElementById("sincronizar-btn");
+            async function loadSedesAsync() {
+                try {
+                    const sedes = await repository.getAllSedesAsync();
+                    sedesCount.innerText = sedes.length;
+                    const tbody = document.getElementById("sedes-body");
+                    tbody.innerHTML = "";
+                    const desincronizados = sedes.filter((e) => e.estado !== TIPO_EVENTO.Sincronizado);
+                    desincronizadosCount.innerText = desincronizados.length;
+                    if (desincronizados.length == 0) {
+                        refreshButton.disabled = true;
+                    } else {
+                        refreshButton.disabled = false;
+                    }
+
+                    sedes.forEach((sede) => {
+                        const color = sede.estado === TIPO_EVENTO.Sincronizado ? "green" : "red";
+                        const row = tbody.insertRow();
+                        row.className =
+                            sede.estado === TIPO_EVENTO.Sincronizado
+                                ? "bg-green-100 border-l-4 border-green-500 hover:bg-green-200"
+                                : "bg-red-100 border-l-4 border-red-500 hover:bg-red-200";
+                        row.innerHTML = `
+                    <td>${sede.id}</td>
+                    <td>${sede.isMain == true ? "Si" : "No"}</td>
+                  `;
+                    });
+                } catch (error) {
+                    console.error("Error cargando eventos:", error);
+                }
+            }
+
+            loadSedesAsync();
+        </script>
+    </body>
+</html>

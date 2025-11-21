@@ -9,10 +9,18 @@
     </head>
 
     <body class="bg-gray-50 min-h-screen p-8">
-        <div class="flex items-center justify-between mb-6 pb-4">
-            <a href="sedes.html" class="btn btn-outline btn-primary"> Sedes </a>
-            <a href="logout.html" class="btn btn-outline btn-error"> ❌ </a>
+        <div class="navbar bg-base-100 shadow-sm">
+            <div class="navbar-start">
+                <a class="btn btn-ghost text-xl" id="sede-name">Bellavista</a>
+            </div>
+            <div class="navbar-end">
+                <a href="list-sedes.html" class="btn btn-outline btn-primary" id="sedes-link"> Sedes </a>
+                <div class="divider divider-horizontal"></div>
+                <a href="logout.html" class="btn btn-outline btn-error"> Cerrar Sesión </a>
+            </div>
         </div>
+
+        <div class="flex items-center justify-between mb-6 pb-4"></div>
         <div class="max-w-6xl mx-auto bg-white p-8 rounded-xl shadow-2xl">
             <header class="flex justify-between items-center mb-6 pb-4">
                 <h1 class="text-4xl font-extrabold text-gray-900">Lista de Eventos</h1>

@@ -21,6 +21,9 @@ public class BaseDeDatos(LoginService loginService) : DbContext
             .HasForeignKey(x => x.SedeId);
     }
 
+    /// <summary>
+    /// Ingresar datos iniciales en la base de datos.
+    /// </summary>
     public void SeedData()
     {
         if (Sedes.Any())
