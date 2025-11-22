@@ -2,7 +2,7 @@ type: http_request
 model: http_request
 id: rq_Zzyc2SjGA9
 createdAt: 2025-11-05T19:01:34.366307900
-updatedAt: 2025-11-09T17:41:17.759503500
+updatedAt: 2025-11-21T23:29:25.376643900
 workspaceId: wk_Fb63W8kZcR
 folderId: fl_WCvChRdjU8
 authentication: {}
@@ -11,8 +11,8 @@ body:
   text: |-
     {
       "Id": "${[ uuid.v7() ]}",
-      "SedeId": "SEDE-03",
-      "Nombre": "Ramiro González",
+      "SedeId": "SEDE-04",
+      "Nombre": "Jhon Doe",
       "Identificacion": "1234567890",
       "Tipo": "Entrada",
       "Fecha": "${[ timestamp.iso8601() ]}"
@@ -25,7 +25,7 @@ headers:
   value: application/json
   id: hZ8R5B2c3H
 method: PUT
-name: Create Evento
+name: Crear Un Evento
 sortPriority: 3000.0
-url: https://localhost:7205/eventos
+url: ${[ API_URL ]}/eventos
 urlParameters: []

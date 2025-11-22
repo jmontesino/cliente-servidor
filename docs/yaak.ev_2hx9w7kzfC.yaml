@@ -3,7 +3,7 @@ model: environment
 id: ev_2hx9w7kzfC
 workspaceId: wk_Fb63W8kZcR
 createdAt: 2025-11-19T23:15:44.514963300
-updatedAt: 2025-11-19T23:16:07.378264400
+updatedAt: 2025-11-21T23:14:07.865245800
 name: Local
 public: true
 base: false
@@ -13,6 +13,10 @@ variables:
 - enabled: true
   name: API_URL
   value: https://localhost:7205
-  id: 2CNqs00hgT
+  id: KtXcAhv3C0
+- enabled: true
+  name: ACCESS_TOKEN
+  value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJTRURFLTAxIiwibWFpbiI6IkZhbHNlIiwiZXhwIjoxNzY0MDQ4MjE4LCJpc3MiOiJCZWxsYVZpc3RhSXNzdWVyIiwiYXVkIjoiQmVsbGFWaXN0YUF1ZGllbmNlIn0.eRKRFsvI3Boz5VoB0hOtb7hvSznY-hBXn5sb_9vgEME
+  id: EUA5mUz7HM
 color: var(--success)
-sortPriority: 0.0
+sortPriority: 1000.0

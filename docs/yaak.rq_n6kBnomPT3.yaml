@@ -2,7 +2,7 @@ type: http_request
 model: http_request
 id: rq_n6kBnomPT3
 createdAt: 2025-11-05T19:08:48.240091200
-updatedAt: 2025-11-19T23:19:49.024748500
+updatedAt: 2025-11-21T23:29:22.744312200
 workspaceId: wk_Fb63W8kZcR
 folderId: fl_WCvChRdjU8
 authentication: {}
@@ -10,7 +10,7 @@ authenticationType: null
 body:
   text: |-
     {
-      "Id": "SEDE-MAIN",
+      "Id": "SEDE-04",
       "Password": "123456"
     }
 bodyType: application/json
@@ -21,7 +21,7 @@ headers:
   value: application/json
   id: hZ8R5B2c3H
 method: PUT
-name: Create Sede
+name: Crear Una Sede
 sortPriority: 0.0
 url: ${[ API_URL ]}/sedes
 urlParameters: []

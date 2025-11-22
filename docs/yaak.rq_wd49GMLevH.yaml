@@ -2,7 +2,7 @@ type: http_request
 model: http_request
 id: rq_wd49GMLevH
 createdAt: 2025-11-07T03:51:30.661897600
-updatedAt: 2025-11-19T22:47:35.897666200
+updatedAt: 2025-11-22T00:59:42.656745900
 workspaceId: wk_Fb63W8kZcR
 folderId: fl_WCvChRdjU8
 authentication: {}
@@ -21,7 +21,7 @@ headers:
   value: application/json
   id: hBcDvpIAm7
 method: POST
-name: Login
+name: Iniciar Sesión
 sortPriority: 4000.0
 url: ${[ API_URL ]}/login
 urlParameters: []

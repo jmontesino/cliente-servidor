@@ -1,0 +1,227 @@
+{
+    "openapi": "3.1.1",
+    "info": {
+        "title": "BellaVista | v1",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://localhost:7205/"
+        }
+    ],
+    "paths": {
+        "/login": {
+            "post": {
+                "tags": ["BellaVista"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Sede"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/sedes": {
+            "put": {
+                "tags": ["BellaVista"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Sede"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "get": {
+                "tags": ["BellaVista"],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/AnonymousTypeOfstringAndboolean"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/eventos": {
+            "put": {
+                "tags": ["BellaVista"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Evento"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "get": {
+                "tags": ["BellaVista"],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Evento"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/sedes/{sede}/eventos": {
+            "get": {
+                "tags": ["BellaVista"],
+                "parameters": [
+                    {
+                        "name": "sede",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Evento"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "AnonymousTypeOfstringAndboolean": {
+                "required": ["id", "isMain"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": ["null", "string"]
+                    },
+                    "isMain": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "Evento": {
+                "required": [
+                    "id",
+                    "sedeId",
+                    "identificacion",
+                    "nombre",
+                    "tipo",
+                    "fecha"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "sedeId": {
+                        "type": "string"
+                    },
+                    "sede": {
+                        "oneOf": [
+                            {
+                                "type": "null"
+                            },
+                            {
+                                "$ref": "#/components/schemas/Sede"
+                            }
+                        ]
+                    },
+                    "identificacion": {
+                        "type": "string"
+                    },
+                    "nombre": {
+                        "type": "string"
+                    },
+                    "tipo": {
+                        "$ref": "#/components/schemas/TipoEvento"
+                    },
+                    "fecha": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "Sede": {
+                "required": ["id", "password"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "isMain": {
+                        "type": "boolean"
+                    },
+                    "eventos": {
+                        "type": ["null", "array"],
+                        "items": {
+                            "$ref": "#/components/schemas/Evento"
+                        }
+                    }
+                }
+            },
+            "TipoEvento": {
+                "enum": ["Entrada", "Salida"]
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "BellaVista"
+        }
+    ]
+}
