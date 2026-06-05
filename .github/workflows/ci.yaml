@@ -22,5 +22,6 @@ jobs:
           args: >
             -Dsonar.projectKey=cliente-servidor
             -Dsonar.organization=jmontesino
-            -Dsonar.sources=.
+            -Dsonar.sources=client/src,server
             -Dsonar.tests=.
+            -Dsonar.exclusions=client/package-lock.json
