@@ -1,8 +1,8 @@
-name: analisis de codigo
+name: Análisis de codigo
 on:
  push:
    branches:
-     - master
+     - main
  pull_request:
    types: [opened, synchronize, reopened]
 jobs:
